@@ -1,0 +1,191 @@
+//Euler's Formula
+expIx <- function(x) exp(complex(real=0, imaginary=x))
+
+//Converts from radians to degrees
+radToDeg <- function(x) x*180/pi
+
+//Converts from degrees to radians
+degToRad <- function(x) x*pi/180
+
+//Dot product (Weighted sum)
+dot <- function(a,b) sum(a*b)
+
+//Magnitude of a vector
+mag <- function(v) sqrt(dot(v, v))
+
+//Unit Vector
+unit <- function(v) v/mag(v)
+
+//Modulus Operator
+mod <- function(x, n) x - floor(x/n)*n
+
+//Boolean Divides Operator
+divides <- function(n, x) x/n == floor(x/n)
+
+//Boolean Integer Classifier
+int <- function(x)  x == floor(x)
+
+//Greatest Common Divisor Function
+gcd <- function(a, b){
+    if(a>b){
+        if(b!=0){
+            for(i in 0:(b-1)){
+                if(divides((b-i), b)){
+                    if(divides((b-i), a)){
+                        return(b-i)
+                    }
+                }
+            }
+        } else {
+            return(a)
+        }
+    }else{
+        if(a!=0){
+            for(i in 0:(a-1)){
+                if(divides((a-i), a)){
+                    if(divides((a-i), b)){
+                        return(a-i)
+                    }
+                }
+            }
+        } else {
+            return(b)
+        }
+    }
+}
+
+//Boolean Operator that returns true if its inputs are co-prime and false otherwise
+coprime <- function(a, b) gcd(a,b)==1
+
+//Factorial Function
+fact <- function(x){
+    i <- 0
+    y <- 1
+    while(i < x){
+        i <- i+1
+        y <- y*i
+    }
+    y
+}
+
+//Choose
+choose <- function(n, k) fact(n)/(fact(n-k)*fact(k))
+
+//Permutation
+permut <- choose <- function(n, k) fact(n)/fact(n-k)
+
+//Partial Sums RStudio
+partialSums <- function(x){
+    v <- c()
+    a <- 0
+    for(i in 1:length(x)){
+        a <- a + x[i]
+        v <- c(v, a)
+    }
+    return(v)
+}
+
+//Partial Sums Python
+def partialSums(x):
+    v = []
+    a = 0
+    for i in x:
+        a += i
+        v.append(a)
+    return(v)
+
+//Alternating Sequence RStudio
+alternatingSeq <- function(x){
+    v <- c()
+    for(i in 1:length(x)){
+        v <- c(v, x[i]*(-1)^(i-1))
+    }
+    v
+}
+
+//Alternating Sequence Python
+def alternatingSeq(x):
+    v = []
+    k = 0
+    for i in x:
+        v.append(i*(-1)**(k))
+        k += 1
+    return(v)
+
+//Partial Sums of an Alternating Sequence RStudio
+partialAltSums <- function(x) partialSums(alternatingSeq(x))
+
+//Partial Sums of an Alternating Sequence Python
+def partialAltSums(x): 
+    return partialSums(alternatingSeq(x))
+
+//Reurns a 1 if x is true and a 0 otherwise
+booleanInt <- function(x){
+    if(x){
+        return(1)
+    }else{
+        return(0)
+    }
+}
+
+//Returns a vector of 1's and 0's given a vector of boolean values
+booleanGraph <- function(x){
+    v <- c()
+    i <- 0
+    while(i < length(x)){
+        i <- i + 1
+        v <- c(v, booleanInt(x[i]))
+    }
+    return(v)
+}
+
+//Counts the number of occurences of "TRUE" in the input vector
+booleanCounter <- function(x) partialSums(propertyGraph(x))
+
+//Returns a vector of the first x primes
+primes <- function(x){
+    v <- c(2)
+    k <- 2
+    while(length(v) < x){
+        k <- k+1
+        b <- sqrt(k)
+        a <- TRUE
+        i <- 1
+        while(a && b>= v[i]){
+            if(k%%v[i]==0){
+                a <- FALSE
+            }
+            i <- i+1
+        }
+        if(a){
+            v <- c(v, k)	
+        }
+    }
+    v
+}
+
+//Returns the first X primes
+def primes(x):
+    v = [2]
+    k = 2
+    while(len(v) < x):
+        k = k+1
+        b = k**(1/2)
+        a = True
+        i = 0
+        while(a and b >= v[i]):
+            if(k % v[i] == 0):
+                a = False
+            i = i+1
+        if(a):
+            v.append(k)
+    return(v)
+
+//Evaluates the Riemann Zeta Function for the first n terms of the infinite sum
+zeta <- function(x, n){
+  s <- 0
+  for(i in 1:n){
+    s <- s+i^-x
+  }
+  s
+}
