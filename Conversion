@@ -1,0 +1,27 @@
+decToBaseN <- function(x, n){
+    m <- matrix(0L, ncol = floor(log(x, base=n))+1)
+    k <- x
+    go <- TRUE
+    while(go){
+        if(k >= n){
+            b <- floor(log(k, base=n))
+            a <- floor(k/n^b)
+            m[length(m)-b] <- a
+            k <- k - a*(n^b)
+        }else{
+            m[length(m)] <- k
+            go <- FALSE
+        }
+    }
+    m
+}
+
+baseNtoDec <- function(x, n){
+    a <- 0
+    for(i in 1:length(x)){
+        a <- a+x[i]*n^(length(x)-i)
+    }
+    a
+}
+
+baseNtoBaseM <- function(x, n, m) decToBaseN(baseNtoDec(x, n), m)
